@@ -1,13 +1,25 @@
 {% extends 'base.html' %}
 
 {% block head_title %}
-this is amazing!!!
+
 {% endblock head_title %}
 
 {% block content %}
 Welcome to Tweetme
 
+<div id="tweets">
+    Loading...
+</div>
+
 <script>
+const tweetsElement = document.getElementById("tweets")
+// tweetsElement.innerHTML = 'Loading...'
+//
+// var el1 = "<h1>Hi there 1</h1>"
+// var el2 = "<h1>Hi there 2</h1>"
+// var el3 = "<h1>Hi there 3</h1>"
+// tweetsElement.innerHTML = el1 + el2 + el3
+
 const xhr = new XMLHttpRequest()
 const method = 'GET'
 const url = "/tweets"
@@ -18,11 +30,21 @@ xhr.open(method, url)
 xhr.onload = function (){
     console.log(xhr.response)
     const serverResponse = xhr.response
-    var listedItems = xhr.response.response
-    console.log(listedItems)
+    var listedItems = serverResponse.response
+    var finalTweetStr = ""
+    var i;
+    for (i=0; i<listedItems.length; i++){
+        console.log(i)
+        console.log(listedItems[i])
+        var currentItem = "<div class = 'mb-4'> <h1>" + listedItems[i].id + "</h1>" + "<p>" + listedItems[i].content + "</p></div>"
+            finalTweetStr += currentItem
+    }
+    tweetsElement.innerHTML = finalTweetStr
+    //console.log(listedItems)
 }
 xhr.send()
 
 </script>
+
 
 {% endblock content %}
