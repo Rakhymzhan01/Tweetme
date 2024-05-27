@@ -5,20 +5,33 @@
 {% endblock head_title %}
 
 {% block content %}
-Welcome to Tweetme
+<div class="row text-center">
+    <div class="col">
+        <h1>Welcome to Tweetme</h1>
+    </div>
+</div>
 
-<div id="tweets">
+<div class="row mb-3">
+    <div class="col-md-4 mx-auto col-10">
+        <form class="form" method="post" action="/create-tweet">
+            {% csrf_token %}
+            <input type="hidden" value="/" name="text">
+            <textarea class="form-control" name="content" placeholder="Your tweet..."></textarea>
+            <button type="submit" class="btn btn-primary">Tweet</button>
+        </form>
+    </div>
+</div>
+
+<div class="row" id="tweets">
     Loading...
 </div>
 
 <script>
 const tweetsElement = document.getElementById("tweets")
-// tweetsElement.innerHTML = 'Loading...'
-//
-// var el1 = "<h1>Hi there 1</h1>"
-// var el2 = "<h1>Hi there 2</h1>"
-// var el3 = "<h1>Hi there 3</h1>"
-// tweetsElement.innerHTML = el1 + el2 + el3
+
+function loadTweets(){
+
+}
 
 const xhr = new XMLHttpRequest()
 const method = 'GET'
@@ -27,6 +40,7 @@ const responseType = "json"
 
 function handleDidLike(tweet_id, currentCount){
     console.log(tweet_id, currentCount)
+
 }
 function LikeBtn(tweet){
     return "<button class = 'btn btn-primary btn-small' onclick=handleDidLike(" +
@@ -34,11 +48,11 @@ function LikeBtn(tweet){
 }
 
 function formatTweetElement(tweet){
-    var formattedTweet = "<div class = 'mb-4 tweet' id ='tweet-" + tweet.id
+    var formattedTweet = "<div class = 'col-12 col-mb-10 mx-auto border rounded py-3 mb-4 tweet' id ='tweet-" + tweet.id
         + "' ><p>" + tweet.content +
          "</p><div class = 'btn-group'>"+ LikeBtn(tweet) +
 
-        "</p></div>"
+        "</div></div>"
     return formattedTweet
 }
 xhr.responseType = responseType

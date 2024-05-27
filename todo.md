@@ -4,6 +4,8 @@
         ->Text
     -> Delete
     -> Retweeting
+    ->Liking
+
 2. Users 
     -> Register
     -> Login
